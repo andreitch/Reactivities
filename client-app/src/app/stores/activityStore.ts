@@ -45,7 +45,7 @@ class ActivityStore {
         console.log(error);
         this.loadingInitial = false;
       });
-      throw error;
+      console.log(error);
     }
   };
 
