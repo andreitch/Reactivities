@@ -3,8 +3,8 @@ import { Segment, Form, Button, Grid } from "semantic-ui-react";
 import { IActivity } from "../../../app/models/activity";
 import { v4 as uuid } from "uuid";
 import { observer } from "mobx-react-lite";
-import ActivityStore from "../../../app/stores/activityStore";
 import { RouteComponentProps } from "react-router-dom";
+import { RootStoreContext } from "../../../app/stores/rootStore";
 
 interface DetailsParam {
   id: string;
@@ -14,7 +14,7 @@ const ActivityForm: React.FC<RouteComponentProps<DetailsParam>> = ({
   match,
   history
 }) => {
-  const activityStore = useContext(ActivityStore);
+  const rootStore = useContext(RootStoreContext);
   const {
     createActivity,
     editActivity,
@@ -22,7 +22,7 @@ const ActivityForm: React.FC<RouteComponentProps<DetailsParam>> = ({
     activity: initialFormState,
     loadActivity,
     clerActivity
-  } = activityStore;
+  } = rootStore.activityStore;
 
   const [activity, setActivity] = useState<IActivity>({
     id: "",
