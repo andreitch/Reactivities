@@ -12,7 +12,7 @@ namespace Application.Validators
         .Matches("[A-Z]").WithMessage("Password must contain one uppercase letter")
         .Matches("[a-z]").WithMessage("Password must contain one lowercase letter")
         .Matches("[0-9]").WithMessage("Password must contain a number")
-        .Matches("^a-zA-Z0-9").WithMessage("Password must contain non alphnumeric");
+        .Matches("[^a-zA-Z0-9]").WithMessage("Password must contain non alphnumeric");
 
         return options;
     }
