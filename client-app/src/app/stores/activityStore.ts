@@ -5,8 +5,7 @@ import agent from "../api/agent";
 import { RootStore } from "./rootStore";
 import { history } from "../..";
 import { toast } from "react-toastify";
-import { setActivityProps } from "../common/util/util";
-
+import { setActivityProps, createAttendee } from "../common/util/util";
 
 export default class ActivityStore {
   rootStore: RootStore;
@@ -30,11 +29,15 @@ export default class ActivityStore {
     const sortedActivities = activities.sort(
       (a, b) => a.date.getTime() - b.date!.getTime()
     );
-    return Object.entries(sortedActivities.reduce((activities, activity) => {
-      const date = activity.date.toISOString().split('T')[0];
-      activities[date] = activities[date] ? [...activities[date], activity] : [activity];
-      return activities;
-    }, {} as {[key: string]: IActivity[]}));
+    return Object.entries(
+      sortedActivities.reduce((activities, activity) => {
+        const date = activity.date.toISOString().split("T")[0];
+        activities[date] = activities[date]
+          ? [...activities[date], activity]
+          : [activity];
+        return activities;
+      }, {} as { [key: string]: IActivity[] })
+    );
   }
 
   @action loadActivities = async () => {
@@ -71,8 +74,8 @@ export default class ActivityStore {
           this.activity = activity;
           this.activityRegistry.set(activity.id, activity);
           this.loadingInitial = false;
-        })
-        return activity; 
+        });
+        return activity;
       } catch (error) {
         runInAction("getting activity error", () => {
           this.loadingInitial = false;
@@ -104,7 +107,7 @@ export default class ActivityStore {
         console.log(error);
         this.submitting = false;
       });
-      toast.error('Problem submitting data');
+      toast.error("Problem submitting data");
       console.log(error.response);
     }
   };
@@ -124,7 +127,7 @@ export default class ActivityStore {
         console.log(error);
         this.submitting = false;
       });
-      toast.error('Problem submitting data');
+      toast.error("Problem submitting data");
       console.log(error.response);
     }
   };
@@ -148,6 +151,25 @@ export default class ActivityStore {
         this.submitting = false;
         this.target = "";
       });
+    }
+  };
+
+  @action attendActivity = () => {
+    const attendee = createAttendee(this.rootStore.userStore.user!);
+    if (this.activity) {
+      this.activity.attendees.push(attendee);
+      this.activity.isGoing = true;
+      this.activityRegistry.set(this.activity.id, this.activity);
+    }
+  };
+
+  @action cancelAttendance = () => {
+    if ((this, this.activity)) {
+      this.activity.attendees = this.activity.attendees.filter(
+        a => a.username !== this.rootStore.userStore.user!.username
+      );
+      this.activity.isGoing = false;
+      this.activityRegistry.set(this.activity.id, this.activity);
     }
   };
 }
