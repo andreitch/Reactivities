@@ -13,6 +13,7 @@ namespace Persistence
     public DbSet<Value> Values { get; set; }
     public DbSet<Activity> Activities { get; set; }
     public DbSet<UserActivity> UserActivities { get; set; }
+    public DbSet<Photo> Photos { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -23,7 +24,7 @@ namespace Persistence
               new Value { Id = 2, Name = "Value 102" },
               new Value { Id = 3, Name = "Value 102" }
           );
-          
+
       builder.Entity<UserActivity>(x => x.HasKey(ua => new { ua.AppUserId, ua.ActivityId }));
 
       builder.Entity<UserActivity>()
