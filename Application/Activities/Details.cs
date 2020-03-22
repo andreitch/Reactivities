@@ -5,7 +5,6 @@ using System;
 using Persistence;
 using Application.Errors;
 using System.Net;
-using Microsoft.EntityFrameworkCore;
 using Application.Activities;
 using AutoMapper;
 using Domain;
