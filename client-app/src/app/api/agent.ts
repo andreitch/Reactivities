@@ -3,6 +3,7 @@ import { IActivity } from "../models/activity";
 import { IUser, IUserFormValues } from "../models/user";
 import { history } from "../..";
 import {toast} from 'react-toastify';
+import { IProfile } from "../models/profile";
 
 axios.defaults.baseURL = "http://localhost:5000/api";
 
@@ -49,8 +50,7 @@ const Activities = {
   list: (): Promise<IActivity[]> => request.get("/activities"),
   details: (id: string) => request.get(`/activities/${id}`),
   create: (activity: IActivity) => request.post("/activities", activity),
-  update: (activity: IActivity) =>
-    request.put(`/activities/${activity.id}`, activity),
+  update: (activity: IActivity) => request.put(`/activities/${activity.id}`, activity),
   delete: (id: string) => request.del(`/activities/${id}`),
   attend: (id: string) => request.post(`/activities/${id}/attend`, {}),
   unattend: (id: string) => request.del(`/activities/${id}/attend`)
@@ -62,7 +62,12 @@ const User = {
   register: (user: IUserFormValues): Promise<IUser> => request.post(`/user/register`, user)
 }
 
+const Profiles = {
+  get: (username: string): Promise<IProfile> => request.get(`/profiles/${username}`)
+}
+
 export default {
   Activities,
-  User
+  User,
+  Profiles
 };
