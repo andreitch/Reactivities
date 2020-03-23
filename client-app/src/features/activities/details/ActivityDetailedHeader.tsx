@@ -5,7 +5,6 @@ import { observer } from "mobx-react-lite";
 import { Link } from "react-router-dom";
 import { format } from "date-fns";
 import { RootStoreContext } from "../../../app/stores/rootStore";
-import { userInfo } from "os";
 
 const activityImageStyle = {
   filter: "brightness(30%)"
