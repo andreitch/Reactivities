@@ -29,7 +29,6 @@ const PhotoWdgetDropzone: React.FC<IProps> = ({ setFiles }) => {
           })
         )
       );
-      console.log(acceptedFiles);
     },
     [setFiles]
   );
