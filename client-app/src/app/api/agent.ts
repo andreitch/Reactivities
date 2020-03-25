@@ -3,7 +3,7 @@ import { IActivity } from "../models/activity";
 import { IUser, IUserFormValues } from "../models/user";
 import { history } from "../..";
 import {toast} from 'react-toastify';
-import { IProfile } from "../models/profile";
+import { IProfile, IPhoto } from "../models/profile";
 
 axios.defaults.baseURL = "http://localhost:5000/api";
 
@@ -43,7 +43,14 @@ const request = {
   get: (url: string) => axios.get(url).then(sleep(1000)).then(responseBody),
   post: (url: string, body: {}) => axios.post(url, body).then(sleep(1000)).then(responseBody),
   put: (url: string, body: {}) => axios.put(url, body).then(sleep(1000)).then(responseBody),
-  del: (url: string) => axios.delete(url).then(sleep(1000)).then(responseBody)
+  del: (url: string) => axios.delete(url).then(sleep(1000)).then(responseBody),
+  postForm: (url: string, file: Blob) => {
+    let formData = new FormData();
+    formData.append('File', file);
+    return axios.post(url, formData, {
+      headers: {'Content-type': 'multipart/form-data'}
+    }).then(responseBody);
+  }
 };
 
 const Activities = {
@@ -63,7 +70,8 @@ const User = {
 }
 
 const Profiles = {
-  get: (username: string): Promise<IProfile> => request.get(`/profiles/${username}`)
+  get: (username: string): Promise<IProfile> => request.get(`/profiles/${username}`),
+  uploadPhoto: (photo: Blob): Promise<IPhoto> => request.postForm(`/photos`, photo)
 }
 
 export default {
