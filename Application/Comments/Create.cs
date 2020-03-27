@@ -51,7 +51,7 @@ namespace Application.Comments
 
         var success = await _context.SaveChangesAsync() > 0;
 
-        if (success) return Mapper.Map<CommentDto>(comment);
+        if (success) return _mapper.Map<CommentDto>(comment);
 
         throw new Exception("Problem saving changes");
       }
