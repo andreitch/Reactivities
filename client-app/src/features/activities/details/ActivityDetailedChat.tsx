@@ -1,7 +1,23 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useContext, useEffect } from "react";
 import { Segment, Comment, Header, Form, Button } from "semantic-ui-react";
+import { RootStoreContext } from "../../../app/stores/rootStore";
 
-const ActivityDetailedChart = () => {
+const ActivityDetailedChat = () => {
+  const rootStore = useContext(RootStoreContext);
+  const {
+    createHubConnection,
+    stopHubConnection,
+    addComment,
+    activity
+  } = rootStore.activityStore;
+
+  useEffect(() => {
+    createHubConnection();
+    return () => {
+      stopHubConnection();
+    };
+  }, [createHubConnection, stopHubConnection]);
+
   return (
     <Fragment>
       <Segment
@@ -58,4 +74,4 @@ const ActivityDetailedChart = () => {
   );
 };
 
-export default ActivityDetailedChart;
+export default ActivityDetailedChat;
