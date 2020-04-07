@@ -14,6 +14,7 @@ export default class ProfileStore {
   @observable loadingProfile = true;
   @observable uploadingPhoto = false;
   @observable loading = false;
+  @observable followings: IProfile[] = [];
 
   @computed get isCurrentUser() {
     if (this.rootStore.userStore.user && this.profile) {
@@ -140,6 +141,22 @@ export default class ProfileStore {
       })
     } catch (error) {
       toast.error("Problem unfollowing user");
+      runInAction(() => {
+        this.loading = false;
+      })
+    }
+  }
+
+  @action loadFollowings = async (predicate: string) => {
+    this.loading = true;
+    try {
+      const profiles = await agent.Profiles.listFollowings(this.profile!.username, predicate);
+      runInAction(() => {
+        this.followings = profiles;
+        this.loading = false;
+      })
+    } catch (error) {
+      toast.error("Problem loading followings");
       runInAction(() => {
         this.loading = false;
       })
