@@ -49,7 +49,7 @@ export default class ActivityStore {
     params.append('offset', `${this.page ? this.page * LIMIT : 0}`);
     this.predicate.forEach((value, key) => {
       if (key === 'startDate') {
-        params.append(key, value.toISOString);
+        params.append(key, value.toISOString());
       } else {
         params.append(key, value);
       }
