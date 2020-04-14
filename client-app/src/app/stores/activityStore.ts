@@ -1,4 +1,4 @@
-import { observable, action, computed, runInAction, reaction } from "mobx";
+import { observable, action, computed, runInAction, reaction, toJS } from "mobx";
 import { SyntheticEvent } from "react";
 import { IActivity } from "../models/activity";
 import agent from "../api/agent";
@@ -145,7 +145,7 @@ export default class ActivityStore {
     let activity = this.getActivity(id);
     if (activity) {
       this.activity = activity;
-      return activity;
+      return toJS(activity);
     } else {
       this.loadingInitial = true;
       try {
