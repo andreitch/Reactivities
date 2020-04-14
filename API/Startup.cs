@@ -132,10 +132,18 @@ namespace API
       }
 
       // app.UseHttpsRedirection();
+      app.UseDefaultFiles();
+      app.UseStaticFiles();
       app.UseAuthentication();
       app.UseCors("CorsPolicy");
       app.UseSignalR(routes => { routes.MapHub<ChatHub>("/chat"); });
-      app.UseMvc();
+      app.UseMvc(routes => 
+      {
+        routes.MapSpaFallbackRoute(
+          name: "spa-fallback",
+          defaults: new {controller = "Fallback", action = "Index"}
+        );
+      });
     }
   }
 }
