@@ -4,3 +4,4 @@ obj
 appsettings.json
 *.db
 API/wwwroot
+publish
