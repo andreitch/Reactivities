@@ -1,0 +1,18 @@
+[Unit]
+Description=Kestrel service running on Ubuntu 18.04
+
+[Service]
+WorkingDirectory=/var/reactivities
+ExecStart=/usr/bin/dotnet /var/reactivities/API.dll
+Restart=always
+RestartSec=10
+SyslogIdentifier=reactivities
+User=www-data
+Environment=ASPNETCORE_ENVIRONMENT=Production
+Environment=Cloudinary:CloudName=***
+Environment=Cloudinary:ApiSecret=***
+Environment=Cloudinary:ApiKey=***
+Environment=TokenKey:***
+
+[Install]
+WantedBy=multi-user.target
