@@ -21,9 +21,11 @@ namespace Application.Activities
         }
         public class Query : IRequest<ActivitiesEnvelope>
         {
-            private readonly bool _isGoing;
-            private readonly bool _isHost;
-            private readonly DateTime? _startDate;
+            public int? Limit { get; set; }
+            public int? Offset { get; set; }
+            public bool IsGoing { get; set; }
+            public bool IsHost { get; set; }
+            public DateTime StartDate { get; set; }
             public Query(int? limit, int? offset, bool isGoing, bool isHost, DateTime? startDate)
             {
                 StartDate = startDate ?? DateTime.Now;
@@ -33,11 +35,6 @@ namespace Application.Activities
                 Offset = offset;
 
             }
-            public int? Limit { get; set; }
-            public int? Offset { get; set; }
-            public bool IsGoing { get; set; }
-            public bool IsHost { get; set; }
-            public DateTime StartDate { get; set; }
         }
 
         public class Handler : IRequestHandler<Query, ActivitiesEnvelope>
