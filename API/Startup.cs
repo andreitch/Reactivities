@@ -52,7 +52,7 @@ namespace API
       services.AddDbContext<DataContext>(opt =>
       {
         opt.UseLazyLoadingProxies();
-        opt.UseMySql(Configuration.GetConnectionString("DefaultConnection"));
+        opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
       });
 
       ConfigureServices(services);
@@ -143,7 +143,7 @@ namespace API
       else
       {
         // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-        // app.UseHsts();
+        app.UseHsts();
       }
 
       app.UseXContentTypeOptions();
